@@ -1,13 +1,88 @@
+:root {
+  --primario: #00dd80;
+  --secundario: #0d0f11;
+  --terciario: #ffffff;
+  --cuarto: #848486;
+  --fondo: #16161e;
+  --fondo-hover: #242431;
+  --danger: #ee5555;
+  --warning: #e1c004;
+  --border: #3a3a3a;
+}
+
+html {
+  height: 100%;
+}
+
+#root {
+  height: 100%; /* remove this line to see div.app is no more 100% height */
+  background-color: indigo;
+}
+
 body {
+  margin: 0;
+  height: 100%;
+  background: var(--secundario);
+}
+
+.main-background-color {
+  height: 100%;
+  background-color: var(--secundario);
+}
+
+p {
+  margin: 0;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.option-select-currency {
+  color: var(--cuarto);
+  cursor: pointer;
+  padding-left: 15px;
+  border-radius: 5px;
+}
+.option-select-currency:hover {
+  color: var(--primario);
+  background-color: var(--secundario);
+}
+
+.selected-ticker{
+  background-color: var(--fondo-hover);
+}
+
+.ticker{
+  background-color: var(--fondo);
+}
+.ticker:hover{
+  background-color: var(--fondo-hover);
+}
+
+.arrow_box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-inline: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    sans-serif !important;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.apexcharts-tooltip {
+  background: var(--fondo-hover) !important;
+  border:var(--fondo) !important;
+  box-shadow: none !important;
+  color: white;
+}
+
+.date-tooltip {
+ font-size: 12px; 
+ margin-bottom: 5px;
+ color: var(--primario);
 }
