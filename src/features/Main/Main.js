@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid, Container } from '@mantine/core';
 import { CryptoTickers } from './CryptoTicker/CryptoTickers';
 import { Visualizer } from './Visualizer/Visualizer';
 import { Exchange } from './Exchange/Exchange';
@@ -7,23 +6,16 @@ import { Exchange } from './Exchange/Exchange';
 export const Main = () => {
 
   return (
-    <div className="main-background-color">
-      <Container fluid px="xl" style={{height: '100%' }}>
-        <Grid
-          columns={12}
-          style={{paddingTop: 50, height: '90%'}}
-        >
-          <Grid.Col span={3}>
+    <div className="main-background-color p-5 flex flex-col lg:max-h-screen md:grid lg:grid-cols-12 md:grid-cols-8 sm:gap-4">
+          <div className='lg:col-span-3 md:col-span-8 row-span-1'>
             <CryptoTickers />
-          </Grid.Col>
-          <Grid.Col span={6}>
+          </div>
+          <div className='lg:col-span-6 md:col-span-5 row-span-1'>
             <Visualizer />
-          </Grid.Col>
-          <Grid.Col span={3}>
+          </div>
+          <div className='lg:col-span-3 md:col-span-3 row-span-1'>
             <Exchange />
-          </Grid.Col>
-        </Grid>
-      </Container>
+          </div>
     </div>
   )
 }

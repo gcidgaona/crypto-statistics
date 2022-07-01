@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Ticker } from './components/Ticker'
 import { getSingleCoin } from '../../../api'
-import { Stack, ScrollArea } from '@mantine/core'
 
 const popularCryptoCurrencies = ['bitcoin', 'ethereum', 'bitcoin-cash', 'tether', 'tron', 'litecoin', 'solana', 'usd-coin']
 export const CryptoTickers = () => {
@@ -17,9 +16,7 @@ export const CryptoTickers = () => {
   }, [getAllCryptoData])
 
   return (
-    <div style={{ position: "relative", height: "100%" }}>
-      <ScrollArea style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }} scrollbarSize={2}>
-        <Stack>
+        <div className='carousel-items-wrapper flex lg:flex-col flex-row gap-4'>
           {
             cryptoCurrencies.map(crypto => {
               return (
@@ -27,8 +24,6 @@ export const CryptoTickers = () => {
               )
             })
           }
-        </Stack>
-      </ScrollArea>
-    </div>
+        </div>
   )
 }

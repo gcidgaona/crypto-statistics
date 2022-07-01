@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --primario: #00dd80;
   --secundario: #0d0f11;
@@ -10,23 +14,17 @@
   --border: #3a3a3a;
 }
 
-html {
-  height: 100%;
-}
-
-#root {
-  height: 100%; /* remove this line to see div.app is no more 100% height */
-  background-color: indigo;
-}
-
 body {
   margin: 0;
-  height: 100%;
   background: var(--secundario);
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
 .main-background-color {
-  height: 100%;
   background-color: var(--secundario);
 }
 
@@ -85,4 +83,25 @@ p {
  font-size: 12px; 
  margin-bottom: 5px;
  color: var(--primario);
+}
+
+.carousel-items-wrapper{
+  white-space: nowrap;
+  background-color: #00dd80;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .carousel-items-wrapper{
+    white-space: nowrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 90vh;
+    width: 100%;
+    background-color: #dd2c00;
+  }
+  body{
+    height: 100%;
+  }
 }

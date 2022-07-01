@@ -20,7 +20,7 @@ export const Ticker = ({ crypto }) => {
   }
 
   return (
-    <Card radius="lg" style={{cursor: 'pointer'}} onClick={() => handleSetActive(crypto.id)}>
+    <Card radius="lg" style={{cursor: 'pointer', marginBottom: 12}} className="w-60 min-w-60" onClick={() => handleSetActive(crypto.id)}>
       <Card.Section className={currencySelected == crypto.id ? 'selected-ticker' : 'ticker' } style={{paddingLeft: 30, paddingRight: 20, paddingTop: 20, paddingBottom: 20 }}>
         <Stack spacing={6}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
