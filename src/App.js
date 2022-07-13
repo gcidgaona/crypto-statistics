@@ -1,6 +1,6 @@
 import GlobalCryptoContext from "./context/GlobalCryptoContext";
 import { useState } from 'react'
-import { Main } from "./features/Main/Main";
+import { Main } from "./containers/Main";
 
 function App() {
   const [currencySelected, setCurrencySelected] = useState('bitcoin')

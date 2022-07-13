@@ -1,7 +1,7 @@
 import React from 'react'
-import { CryptoTickers } from './CryptoTicker/CryptoTickers';
-import { Visualizer } from './Visualizer/Visualizer';
-import { Exchange } from './Exchange/Exchange';
+import { CryptoTickers } from './CryptoTickers';
+import { Visualizer } from './Visualizer';
+import { Exchange } from './Exchange';
 
 export const Main = () => {
 

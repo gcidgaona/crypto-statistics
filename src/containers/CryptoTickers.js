@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Ticker } from './components/Ticker'
-import { getSingleCoin } from '../../../api'
-import { popularCryptoCurrenciesName } from '../../../constants/cryptocurrencies'
+import { Ticker } from '../features/Main/CryptoTicker/components/Ticker'
+import { getSingleCoin } from '../api'
+import { popularCryptoCurrenciesName } from '../constants/cryptocurrencies'
 
 export const CryptoTickers = () => {
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { GraphHistorical } from './GraphHistorical'
+import { GraphHistorical } from '../features/Main/Visualizer/GraphHistorical'
 
 export const Visualizer = () => {
   return (

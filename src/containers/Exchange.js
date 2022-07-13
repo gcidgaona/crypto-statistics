@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardExchange } from './components/CardExchange'
+import { CardExchange } from '../features/Main/Exchange/components/CardExchange'
 
 export const Exchange = () => {
   return (
