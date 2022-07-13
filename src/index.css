@@ -85,23 +85,40 @@ p {
  color: var(--primario);
 }
 
-.carousel-items-wrapper{
-  white-space: nowrap;
-  background-color: #00dd80;
-  overflow-x: scroll;
-  width: 100%;
+.crypto-ticker {
+  min-height: 120px;
+  @apply min-w-60 w-60
 }
 
-@media screen and (min-width: 1024px) {
-  .carousel-items-wrapper{
-    white-space: nowrap;
+.carousel-items-wrapper {
+  white-space: nowrap;
+  overflow-x: scroll;
+  width: 100%;
+  @apply flex gap-2
+}
+
+@screen sm {
+  .carousel-items-wrapper {
+    overflow-x: scroll;
+    @apply flex flex-row
+  }
+}
+
+@screen md  {
+  .carousel-items-wrapper {
+    overflow-x: scroll;
+    @apply flex flex-row
+  }
+}
+@screen lg  {
+  .carousel-items-wrapper {
+    overflow-x: hidden; 
     overflow-y: scroll;
-    overflow-x: hidden;
     height: 90vh;
-    width: 100%;
-    background-color: #dd2c00;
+    @apply flex flex-col
   }
-  body{
-    height: 100%;
+  .crypto-ticker {
+    @apply min-w-full w-full
   }
+  
 }

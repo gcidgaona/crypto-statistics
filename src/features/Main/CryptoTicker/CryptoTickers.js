@@ -16,14 +16,14 @@ export const CryptoTickers = () => {
   }, [getAllCryptoData])
 
   return (
-        <div className='carousel-items-wrapper flex lg:flex-col flex-row gap-4'>
-          {
-            cryptoCurrencies.map(crypto => {
-              return (
-                <Ticker key={crypto.id} crypto={crypto}/>
-              )
-            })
-          }
-        </div>
+      <div className='carousel-items-wrapper'>
+        {
+          cryptoCurrencies.map(crypto => {
+            return (
+              <Ticker key={crypto.id} crypto={crypto}/>
+            )
+          })
+        }
+      </div>
   )
 }
