@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Ticker } from './components/Ticker'
 import { getSingleCoin } from '../../../api'
+import { popularCryptoCurrenciesName } from '../../../constants/cryptocurrencies'
 
-const popularCryptoCurrencies = ['bitcoin', 'ethereum', 'bitcoin-cash', 'tether', 'tron', 'litecoin', 'solana', 'usd-coin']
 export const CryptoTickers = () => {
 
   const [cryptoCurrencies, setCryptoCurrencies] = useState([])
 
   const getAllCryptoData = useCallback(() => {
-    Promise.all(popularCryptoCurrencies.map(currency => getSingleCoin(currency))).then(result => setCryptoCurrencies(result))
+    Promise.all(popularCryptoCurrenciesName.map(currency => getSingleCoin(currency))).then(result => setCryptoCurrencies(result))
   }, [])
   
   useEffect(() => {

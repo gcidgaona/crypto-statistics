@@ -1,23 +1,10 @@
 import { ActionIcon, Button, Card, InputWrapper, Popover, Stack, Text, NumberInput } from '@mantine/core'
 import { ChevronDown } from 'tabler-icons-react';
+import { popularCryptoCurrencies, mapNameCrypto } from '../../../../constants/cryptocurrencies'
 import React, { useState, useEffect } from 'react'
 import { getPriceToExchange } from '../../../../api';
 
-
-const popularCryptoCurrencies = ['btc', 'eth', 'bch', 'usdt', 'trx', 'ltc', 'sol', 'usdc']
-const mapNameCrypto = {
-  'btc': 'bitcoin', 
-  'eth': 'ethereum', 
-  'bch': 'bitcoin-cash', 
-  'usdt': 'tether', 
-  'trx': 'tron',
-  'ltc': 'litecoin',
-  'sol': 'solana',
-  'usdc': 'usd-coin',
-}
-
 const SelectCurrency = ({ setRefPop, refPop, setVisible, isVisible, setCurrency, currency, isDisabled }) => {
-
   return (
     <>
       <p className="uppercase">{currency}</p>
@@ -37,8 +24,8 @@ const SelectCurrency = ({ setRefPop, refPop, setVisible, isVisible, setCurrency,
           {
             popularCryptoCurrencies.map(crypto => (
               <Stack key={crypto} justify="space-around">
-                <Text className="uppercase option-select-currency"  onClick={() => setCurrency(crypto)}>{crypto}</Text>
-                </Stack>
+                <Text className="uppercase option-select-currency" onClick={() => setCurrency(crypto)}>{crypto}</Text>
+              </Stack>
             ))
           }
         </div>
@@ -102,8 +89,8 @@ export const CardExchange = () => {
   }
 
   return (
-    <Card radius="lg">
-      <Card.Section style={{ background: '#16161e', paddingLeft: 30, paddingRight: 20, paddingTop: 20, paddingBottom: 20, height: 350 }}>
+    <Card radius="lg" className='h-96' style={{ background: '#16161e' }} >
+      <Card.Section style={{ background: '#16161e' }} className="py-5 px-5">
         <Stack justify="space-between" spacing="xl">
           <div>
             <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white' }}>Exchange</Text>

@@ -1,12 +1,11 @@
 import { Card, Image, Stack, Text } from '@mantine/core'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import GlobalCryptoContext from '../../../../context/GlobalCryptoContext'
 import { formatFiatDolar, formatPercentage } from '../../../../helpers/numbers'
 
 export const Ticker = ({ crypto }) => {
   const { symbol, name, image, market_data } = crypto
   const { handleSetCurrency, currencySelected } = useContext(GlobalCryptoContext)
-  const [isActive, setIsActive] = useState(false)
 
   const getColor = (value) => {
     if (value < 0) return 'red'
@@ -16,7 +15,6 @@ export const Ticker = ({ crypto }) => {
 
   const handleSetActive = (id) => {
     handleSetCurrency(id)
-    setIsActive(true)
   }
 
   return (
