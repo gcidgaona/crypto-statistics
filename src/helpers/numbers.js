@@ -9,3 +9,9 @@ export const formatFiatDolar = (value) => {
 export const formatPercentage = (value) => {
   return numeral(value).format(FORMAT_PERCENTAGE)
 }
+
+export const formatValueGraph = (value) => {
+  if(value > 10000) return numeral(value).format('0 a')
+  if(value > 1000) return numeral(value).format('0.00a')
+  return numeral(value).format(FORMAT_DOLAR)
+}

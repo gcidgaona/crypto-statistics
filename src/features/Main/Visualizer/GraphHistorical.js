@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react'
 import GlobalCryptoContext from '../../../context/GlobalCryptoContext'
 import Chart from "react-apexcharts";
 import { getHistoricalChart } from '../../../api';
-import { formatFiatDolar } from '../../../helpers/numbers';
+import { formatFiatDolar, formatValueGraph } from '../../../helpers/numbers';
 
 const options = {
   xaxis: {
@@ -13,19 +13,13 @@ const options = {
   },
   yaxis: {
     labels: {
-      formatter: function(value) {
-        var val = Math.abs(value)
-        if (val >= 1000) {
-          val = (val / 1000).toFixed(0) + ' K'
-        }
-        return val
-      }
+      formatter: (value) => formatValueGraph(value)
     }
   },
   tooltip:{
-      custom: function({series, seriesIndex, dataPointIndex, w}) {
-        var data = w.globals.initialSeries[seriesIndex].data[dataPointIndex];
-        var date = w.globals.categoryLabels[dataPointIndex];
+      custom: function({seriesIndex, dataPointIndex, w}) {
+        let data = w.globals.initialSeries[seriesIndex].data[dataPointIndex];
+        let date = w.globals.categoryLabels[dataPointIndex];
         
         return '<div class="arrow_box">' +
         '<div class="date-tooltip">' +
@@ -36,9 +30,6 @@ const options = {
         '</div>' +
         '</div>';
       },
-    // marker: {
-    //   show: false,
-    // },
   },
   chart:{
     toolbar:{

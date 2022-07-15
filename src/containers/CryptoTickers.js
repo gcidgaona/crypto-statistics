@@ -2,28 +2,46 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { Ticker } from '../features/Main/CryptoTicker/components/Ticker'
 import { getSingleCoin } from '../api'
 import { popularCryptoCurrenciesName } from '../constants/cryptocurrencies'
+import { Skeleton } from '@mantine/core'
 
 export const CryptoTickers = () => {
 
   const [cryptoCurrencies, setCryptoCurrencies] = useState([])
+  const [loading, setloading] = useState(true)
 
   const getAllCryptoData = useCallback(() => {
-    Promise.all(popularCryptoCurrenciesName.map(currency => getSingleCoin(currency))).then(result => setCryptoCurrencies(result))
+    Promise.all(popularCryptoCurrenciesName.map(currency => getSingleCoin(currency))).then(result => {
+      setCryptoCurrencies(result)
+      setloading(false)
+    })
   }, [])
   
   useEffect(() => {
     getAllCryptoData()
   }, [getAllCryptoData])
 
-  return (
+    return (
       <div className='carousel-items-wrapper'>
         {
-          cryptoCurrencies.map(crypto => {
-            return (
-              <Ticker key={crypto.id} crypto={crypto}/>
-            )
-          })
+          loading && (
+            <>
+              <Skeleton height={80} mt={6} radius="md" />
+              <Skeleton height={80} mt={6} radius="md" />
+              <Skeleton height={80} mt={6} radius="md" />
+              <Skeleton height={80} mt={6} radius="md" />
+              <Skeleton height={80} mt={6} radius="md" />
+            </>
+          )
+        }
+        {
+          !loading && (
+            cryptoCurrencies.map(crypto => {
+              return (
+                <Ticker key={crypto.id} crypto={crypto}/>
+              )
+            }))
         }
       </div>
-  )
+    )
+
 }

@@ -1,6 +1,7 @@
 import GlobalCryptoContext from "./context/GlobalCryptoContext";
 import { useState } from 'react'
 import { Main } from "./containers/Main";
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const [currencySelected, setCurrencySelected] = useState('bitcoin')
@@ -12,6 +13,7 @@ function App() {
     <>
     <GlobalCryptoContext.Provider value={{handleSetCurrency, currencySelected}}>
       <Main />
+      <Toaster />
     </GlobalCryptoContext.Provider>
     </>
   );

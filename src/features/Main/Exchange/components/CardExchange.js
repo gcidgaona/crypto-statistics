@@ -3,8 +3,13 @@ import { ChevronDown } from 'tabler-icons-react';
 import { popularCryptoCurrencies, mapNameCrypto } from '../../../../constants/cryptocurrencies'
 import React, { useState, useEffect } from 'react'
 import { getPriceToExchange } from '../../../../api';
+import toast from 'react-hot-toast';
 
-const SelectCurrency = ({ setRefPop, refPop, setVisible, isVisible, setCurrency, currency, isDisabled }) => {
+const SelectCurrency = ({ setRefPop, setVisible, isVisible, setCurrency, currency, isDisabled }) => {
+  const handleSelectCrypto = (crypto) => {
+    setCurrency(crypto)
+    setVisible(false)
+  }
   return (
     <>
       <p className="uppercase">{currency}</p>
@@ -24,7 +29,7 @@ const SelectCurrency = ({ setRefPop, refPop, setVisible, isVisible, setCurrency,
           {
             popularCryptoCurrencies.map(crypto => (
               <Stack key={crypto} justify="space-around">
-                <Text className="uppercase option-select-currency" onClick={() => setCurrency(crypto)}>{crypto}</Text>
+                <Text className="uppercase option-select-currency" onClick={() => handleSelectCrypto(crypto)}>{crypto}</Text>
               </Stack>
             ))
           }
@@ -62,12 +67,27 @@ export const CardExchange = () => {
   }
 
   const setManualExchangeValue = (value) => {
-    let getValue = Object.values(value[mapNameCrypto[sendCurrency]])[0]
+    let getValue = value[0]
     setExchangeValue(getValue);
     setNeedReCalc(old => !old)
   }
   const getPricesToExchange = (from, to) => {
-    getPriceToExchange(mapNameCrypto[from], to).then(result => setManualExchangeValue(result))
+    getPriceToExchange(mapNameCrypto[from], to)
+      .then(result => {
+        let values = Object.values(result[mapNameCrypto[sendCurrency]])
+        if(values.length){
+          setManualExchangeValue(values)
+        }else{
+          toast.error('We dont have exchange for this pair.', {
+            duration: 2000,
+            style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#fff',
+            },
+          })
+        }
+      })
   }
 
   const getCalcReceiveValue = () => {
@@ -78,7 +98,7 @@ export const CardExchange = () => {
   useEffect(() => {
     getCalcReceiveValue()
   }, [needReCalc])
-  
+
   const calculateExchange = () => {
     const defaultReceiveCurrency = receiveCurrency || '-'
     return (
@@ -131,7 +151,7 @@ export const CardExchange = () => {
             {calculateExchange()}
           </div>
           <div>
-            <Button radius={10} disabled={!sendCurrency || !receiveCurrency} onClick={() => getPricesToExchange(sendCurrency, receiveCurrency)} fullWidth styles={() => ({
+            <Button radius={10} disabled={!sendCurrency || !receiveCurrency} className='bg-primary' onClick={() => getPricesToExchange(sendCurrency, receiveCurrency)} fullWidth styles={() => ({
               root: {
                 height: 50,
                 background: '#00dd80',
