@@ -1,64 +1,20 @@
-import { ActionIcon, Button, Card, InputWrapper, Popover, Stack, Text, NumberInput } from '@mantine/core'
+import { ActionIcon, Button, Card, InputWrapper, Popover, Stack, Text, NumberInput, Select, Group, Avatar, SimpleGrid } from '@mantine/core'
 import { ChevronDown } from 'tabler-icons-react';
 import { popularCryptoCurrencies, mapNameCrypto } from '../../../../constants/cryptocurrencies'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, forwardRef, useMemo } from 'react'
 import { getPriceToExchange } from '../../../../api';
 import toast from 'react-hot-toast';
 
-const SelectCurrency = ({ setRefPop, setVisible, isVisible, setCurrency, currency, isDisabled }) => {
-  const handleSelectCrypto = (crypto) => {
-    setCurrency(crypto)
-    setVisible(false)
-  }
-  return (
-    <>
-      <p className="uppercase">{currency}</p>
-      <Popover
-        opened={isVisible}
-        onClose={() => setVisible(false)}
-        spacing={0}
-        disabled={isDisabled}
-        target={
-          <ActionIcon ref={setRefPop} onClick={() => setVisible((m) => !m)} variant="transparent"><ChevronDown size={16} style={{ display: 'block', opacity: 0.5 }} /></ActionIcon>}
-        width={100}
-        position="bottom"
-        placement='end'
-        withArrow
-      >
-        <div style={{paddingTop: 5, paddingBottom: 5}}>
-          {
-            popularCryptoCurrencies.map(crypto => (
-              <Stack key={crypto} justify="space-around">
-                <Text className="uppercase option-select-currency" onClick={() => handleSelectCrypto(crypto)}>{crypto}</Text>
-              </Stack>
-            ))
-          }
-        </div>
-      </Popover>
-    </>
-  )
-}
-
-
 export const CardExchange = () => {
-  const [referenceElement, setReferenceElement] = useState(null);
-  const [visible, setVisible] = useState(false);
   const [amountToSend, setAmountToSend] = useState(0)
   const [amountToReceive, setAmountToReceive] = useState(0)
-  const [referenceElementReceive, setReferenceElementReceive] = useState(null);
-  const [visibleReceive, setVisibleReceive] = useState(false);
   const [sendCurrency, setSendCurrency] = useState('btc')
   const [receiveCurrency, setReceiveCurrency] = useState('')
   const [exchangeValue, setExchangeValue] = useState(0)
   const [needReCalc, setNeedReCalc] = useState(false)
 
-  const setManualVisible = (value) => {
-    setVisible(value)
-  }
+  const dataSelect = popularCryptoCurrencies.map(crypto => ({value: crypto, label: crypto.toUpperCase(), image: `https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@bea1a9722a8c63169dcc06e86182bf2c55a76bbc/32/color/${crypto}.png`}))
 
-  const setManualVisibleReceive = (value) => {
-    setVisibleReceive(value)
-  }
   const setManualSendCurrency = (value) => {
     setSendCurrency(value)
   }
@@ -107,6 +63,23 @@ export const CardExchange = () => {
       </Text>
     )
   }
+  const SelectItem = forwardRef((props, ref) => {
+    const { image, label, ...others } = props
+    return (
+        <div ref={ref} {...others}>
+          <Group noWrap>
+            <Avatar size="sm" src={image} />
+            <div>
+              <Text size="sm">{label}</Text>
+            </div>
+          </Group>
+        </div>
+    );
+  })
+
+  const urlBaseImage = 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@bea1a9722a8c63169dcc06e86182bf2c55a76bbc/32/color'
+  const urlFrom = useMemo(() => `${urlBaseImage}/${sendCurrency}.png`, [sendCurrency])
+  const urlTo = useMemo(() => `${urlBaseImage}/${receiveCurrency}.png`, [receiveCurrency])
 
   return (
     <Card radius="lg" className='h-96' style={{ background: '#16161e' }} >
@@ -116,12 +89,11 @@ export const CardExchange = () => {
             <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white' }}>Exchange</Text>
           </div>
           <Stack spacing={12}>
-            <InputWrapper label="You send">
+            <InputWrapper label="Amount">
               <NumberInput
                 defaultValue={0}
-                rightSectionWidth={70}
+                min={0}
                 onChange={(e) => setAmountToSend(e)}
-                rightSection={<SelectCurrency isDisabled={false} style={{ zIndex: 9999 }} currency={sendCurrency} setRefPop={setReferenceElement} refPop={referenceElement} setVisible={setManualVisible} isVisible={visible} setCurrency={setManualSendCurrency} />}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                 formatter={(value) =>
                   !Number.isNaN(parseFloat(value))
@@ -130,28 +102,33 @@ export const CardExchange = () => {
                 }
               />
             </InputWrapper>
-            <InputWrapper label="You receive">
-            <NumberInput
-                placeholder="Amount Crypto"
-                defaultValue={0}
-                rightSectionWidth={70}
-                value={amountToReceive}
-                disabled
-                rightSection={<SelectCurrency isDisabled={!sendCurrency} style={{ zIndex: 9999 }} currency={receiveCurrency} setRefPop={setReferenceElementReceive} refPop={referenceElementReceive} setVisible={setManualVisibleReceive} isVisible={visibleReceive} setCurrency={setManualReceiveCurrency} />}
-                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                formatter={(value) =>
-                  !Number.isNaN(parseFloat(value))
-                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    : '$ '
+            <SimpleGrid cols={2} spacing="sm">
+              <InputWrapper label="From">
+              <Select       
+                itemComponent={SelectItem}
+                value={sendCurrency}
+                icon={
+                  <Avatar size="xs" src={urlFrom} />
                 }
-              />
-            </InputWrapper>
+                onChange={setManualSendCurrency}
+                data={dataSelect} />
+              </InputWrapper>
+              <InputWrapper label="To">
+              <Select 
+                itemComponent={SelectItem}
+                icon={
+                  <Avatar size="xs" src={urlTo} />
+                }
+                onChange={setManualReceiveCurrency}
+                data={dataSelect} />
+              </InputWrapper>
+            </SimpleGrid>
           </Stack>
           <div>
             {calculateExchange()}
           </div>
           <div>
-            <Button radius={10} disabled={!sendCurrency || !receiveCurrency} className='bg-primary' onClick={() => getPricesToExchange(sendCurrency, receiveCurrency)} fullWidth styles={() => ({
+            <Button radius={10} disabled={!sendCurrency || !receiveCurrency || amountToSend === 0} className='bg-primary' onClick={() => getPricesToExchange(sendCurrency, receiveCurrency)} fullWidth styles={() => ({
               root: {
                 height: 50,
                 background: '#00dd80',
