@@ -3,10 +3,20 @@ import GlobalCryptoContext from '../../../context/GlobalCryptoContext'
 import Chart from "react-apexcharts";
 import { getHistoricalChart } from '../../../api';
 import { formatFiatDolar, formatValueGraph } from '../../../helpers/numbers';
+import dayjs from 'dayjs';
+
+const getDatesLabels = () => {
+  const dates = [dayjs().format('YYYY-MM-DD')]
+  for (let index = 0; index <= 6; index++) {
+    let toDayjs = dayjs(dates[0])
+    dates.unshift(toDayjs.subtract(1, 'day').format('YYYY-MM-DD'))
+  }
+  return dates
+}
 
 const options = {
   xaxis: {
-    categories: ['10/11/2022', '11/11/2022', '12/11/2022', '13/11/2022', '14/11/2022', '15/11/2022', '16/11/2022', '17/11/2022'],
+    categories: getDatesLabels(),
     tooltip: {
       enabled: false,
   },
@@ -68,9 +78,6 @@ export const GraphHistorical = () => {
   
   return (
     <div>
-      {
-        console.log(prices)
-      }
       <Chart
         options={options}
         series={prices}

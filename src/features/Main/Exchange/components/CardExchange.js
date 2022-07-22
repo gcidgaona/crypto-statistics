@@ -4,6 +4,7 @@ import { popularCryptoCurrencies, mapNameCrypto } from '../../../../constants/cr
 import React, { useState, useEffect, forwardRef, useMemo } from 'react'
 import { getPriceToExchange } from '../../../../api';
 import toast from 'react-hot-toast';
+import { formatCrypto } from '../../../../helpers/numbers';
 
 export const CardExchange = () => {
   const [amountToSend, setAmountToSend] = useState(0)
@@ -14,6 +15,10 @@ export const CardExchange = () => {
   const [needReCalc, setNeedReCalc] = useState(false)
 
   const dataSelect = popularCryptoCurrencies.map(crypto => ({value: crypto, label: crypto.toUpperCase(), image: `https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@bea1a9722a8c63169dcc06e86182bf2c55a76bbc/32/color/${crypto}.png`}))
+
+  const urlBaseImage = 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@bea1a9722a8c63169dcc06e86182bf2c55a76bbc/32/color'
+  const urlFrom = useMemo(() => `${urlBaseImage}/${sendCurrency}.png`, [sendCurrency])
+  const urlTo = useMemo(() => `${urlBaseImage}/${receiveCurrency}.png`, [receiveCurrency])
 
   const setManualSendCurrency = (value) => {
     setSendCurrency(value)
@@ -51,6 +56,11 @@ export const CardExchange = () => {
     setAmountToReceive(getCalc)
   }
 
+  const setManualAmountToSend = (e) => {
+    if(!isNaN(e)) return setAmountToSend(e)
+    return setAmountToSend(0)
+  }
+
   useEffect(() => {
     getCalcReceiveValue()
   }, [needReCalc])
@@ -59,7 +69,7 @@ export const CardExchange = () => {
     const defaultReceiveCurrency = receiveCurrency || '-'
     return (
       <Text className='uppercase'>
-        {amountToSend} {sendCurrency} = {exchangeValue} { defaultReceiveCurrency }
+        {formatCrypto(amountToSend)} {sendCurrency} = {formatCrypto(amountToReceive)} { defaultReceiveCurrency }
       </Text>
     )
   }
@@ -77,10 +87,6 @@ export const CardExchange = () => {
     );
   })
 
-  const urlBaseImage = 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@bea1a9722a8c63169dcc06e86182bf2c55a76bbc/32/color'
-  const urlFrom = useMemo(() => `${urlBaseImage}/${sendCurrency}.png`, [sendCurrency])
-  const urlTo = useMemo(() => `${urlBaseImage}/${receiveCurrency}.png`, [receiveCurrency])
-
   return (
     <Card radius="lg" className='h-96' style={{ background: '#16161e' }} >
       <Card.Section style={{ background: '#16161e' }} className="py-5 px-5">
@@ -93,7 +99,8 @@ export const CardExchange = () => {
               <NumberInput
                 defaultValue={0}
                 min={0}
-                onChange={(e) => setAmountToSend(e)}
+                hideControls
+                onChange={(e) => setManualAmountToSend(e)}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                 formatter={(value) =>
                   !Number.isNaN(parseFloat(value))
