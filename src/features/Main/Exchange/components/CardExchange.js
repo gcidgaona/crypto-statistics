@@ -115,7 +115,7 @@ export const CardExchange = () => {
                 itemComponent={SelectItem}
                 value={sendCurrency}
                 icon={
-                  <Avatar size="xs" src={urlFrom} />
+                  sendCurrency && <Avatar size="xs" src={urlFrom} />
                 }
                 onChange={setManualSendCurrency}
                 data={dataSelect} />
@@ -124,7 +124,7 @@ export const CardExchange = () => {
               <Select 
                 itemComponent={SelectItem}
                 icon={
-                  <Avatar size="xs" src={urlTo} />
+                  receiveCurrency && <Avatar size="xs" src={urlTo} />
                 }
                 onChange={setManualReceiveCurrency}
                 data={dataSelect} />
