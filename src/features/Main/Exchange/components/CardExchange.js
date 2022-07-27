@@ -30,15 +30,15 @@ export const CardExchange = () => {
 
   const setManualExchangeValue = (value) => {
     let getValue = value[0]
-    setExchangeValue(getValue);
+    setExchangeValue(getValue)
     setNeedReCalc(old => !old)
   }
   const getPricesToExchange = (from, to) => {
     getPriceToExchange(mapNameCrypto[from], to)
       .then(result => {
-        let values = Object.values(result[mapNameCrypto[sendCurrency]])
-        if(values.length){
-          setManualExchangeValue(values)
+        let getValues = Object.values(result[mapNameCrypto[sendCurrency]])
+        if(getValues.length){
+          setManualExchangeValue(getValues)
         }else{
           toast.error(EXCHANGE_FAIL_MESSAGE, {
             duration: 2000,
@@ -48,6 +48,7 @@ export const CardExchange = () => {
               color: '#fff',
             },
           })
+          setManualExchangeValue(0)
         }
       })
   }

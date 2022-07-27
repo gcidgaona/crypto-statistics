@@ -18,5 +18,6 @@ export const formatValueGraph = (value) => {
 }
 
 export const formatCrypto = (value) => {
-  return numeral(value).format(FORMAT_CRYPTO)
+  if(value > 0) return numeral(value).format(FORMAT_CRYPTO)
+  return '-'
 }
