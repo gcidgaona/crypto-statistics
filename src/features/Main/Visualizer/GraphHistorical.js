@@ -1,9 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react'
 import GlobalCryptoContext from '../../../context/GlobalCryptoContext'
 import Chart from "react-apexcharts";
-import { getHistoricalChart } from '../../../api';
+import { getHistoricalChart } from '../../../services';
 import { formatFiatDolar, formatValueGraph } from '../../../helpers/numbers';
 import dayjs from 'dayjs';
+import { useCallback } from 'react';
 
 const getDatesLabels = () => {
   const dates = [dayjs().format('YYYY-MM-DD')]
@@ -66,15 +67,15 @@ export const GraphHistorical = () => {
   const { currencySelected } = useContext(GlobalCryptoContext)
   const [prices, setPrices] = useState([])
 
-  const getHistoricalChartData = async () => {
+  const getHistoricalChartData = useCallback(async () => {
     let data = await getHistoricalChart(currencySelected).then(result => result.prices)
     const getOnlyPrice = data.map(price => price[1])
     setPrices([{name: 'price', data: getOnlyPrice}])
-  }
+  }, [currencySelected])
 
   useEffect(() => {
     getHistoricalChartData()
-  }, [currencySelected])
+  }, [currencySelected, getHistoricalChartData])
   
   return (
     <div>

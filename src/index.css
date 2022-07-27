@@ -17,9 +17,16 @@
 .bg-primary{
   background-color: var(--primario);
 }
+
 body {
   margin: 0;
   background: var(--secundario);
+  min-width: 375px;
+  max-height: 100%;
+}
+
+p {
+  margin: 0;
 }
 
 ::-webkit-scrollbar {
@@ -29,14 +36,6 @@ body {
 
 .main-background-color {
   background-color: var(--secundario);
-}
-
-p {
-  margin: 0;
-}
-
-.uppercase {
-  text-transform: uppercase;
 }
 
 .option-select-currency {

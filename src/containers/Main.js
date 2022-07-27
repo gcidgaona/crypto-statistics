@@ -6,7 +6,7 @@ import { Exchange } from './Exchange';
 export const Main = () => {
 
   return (
-    <div className="main-background-color p-5 flex flex-col lg:max-h-screen md:grid lg:grid-cols-12 md:grid-cols-8 sm:gap-4">
+    <div className="main-background-color p-5 flex flex-col lg:max-h-screen md:grid lg:grid-cols-12 md:grid-cols-8 sm:gap-6 md:gap-4">
           <div className='lg:col-span-3 md:col-span-8 row-span-1'>
             <CryptoTickers />
           </div>

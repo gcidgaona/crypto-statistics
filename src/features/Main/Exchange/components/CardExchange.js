@@ -1,10 +1,10 @@
-import { ActionIcon, Button, Card, InputWrapper, Popover, Stack, Text, NumberInput, Select, Group, Avatar, SimpleGrid } from '@mantine/core'
-import { ChevronDown } from 'tabler-icons-react';
+import { Button, Card, InputWrapper, Stack, Text, NumberInput, Select, Group, Avatar, SimpleGrid } from '@mantine/core'
 import { popularCryptoCurrencies, mapNameCrypto } from '../../../../constants/cryptocurrencies'
 import React, { useState, useEffect, forwardRef, useMemo } from 'react'
-import { getPriceToExchange } from '../../../../api';
+import { getPriceToExchange } from '../../../../services';
 import toast from 'react-hot-toast';
 import { formatCrypto } from '../../../../helpers/numbers';
+import { useCallback } from 'react';
 
 export const CardExchange = () => {
   const [amountToSend, setAmountToSend] = useState(0)
@@ -51,10 +51,10 @@ export const CardExchange = () => {
       })
   }
 
-  const getCalcReceiveValue = () => {
+  const getCalcReceiveValue = useCallback(() => {
     let getCalc = amountToSend * exchangeValue
     setAmountToReceive(getCalc)
-  }
+  }, [amountToSend, exchangeValue])
 
   const setManualAmountToSend = (e) => {
     if(!isNaN(e)) return setAmountToSend(e)
@@ -63,7 +63,7 @@ export const CardExchange = () => {
 
   useEffect(() => {
     getCalcReceiveValue()
-  }, [needReCalc])
+  }, [needReCalc, getCalcReceiveValue])
 
   const calculateExchange = () => {
     const defaultReceiveCurrency = receiveCurrency || '-'

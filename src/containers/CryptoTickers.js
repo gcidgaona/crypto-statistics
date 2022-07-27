@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Ticker } from '../features/Main/CryptoTicker/components/Ticker'
-import { getSingleCoin } from '../api'
+import { getSingleCoin } from '../services'
 import { popularCryptoCurrenciesName } from '../constants/cryptocurrencies'
 import { Skeleton } from '@mantine/core'
 
@@ -25,11 +25,11 @@ export const CryptoTickers = () => {
         {
           loading && (
             <>
-              <Skeleton height={80} mt={6} radius="md" />
-              <Skeleton height={80} mt={6} radius="md" />
-              <Skeleton height={80} mt={6} radius="md" />
-              <Skeleton height={80} mt={6} radius="md" />
-              <Skeleton height={80} mt={6} radius="md" />
+              <Skeleton height={90} mt={6} radius="md" />
+              <Skeleton height={90} mt={6} radius="md" />
+              <Skeleton height={90} mt={6} radius="md" />
+              <Skeleton height={90} mt={6} radius="md" />
+              <Skeleton height={90} mt={6} radius="md" />
             </>
           )
         }
