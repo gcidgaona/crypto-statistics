@@ -1,10 +1,11 @@
-import { Button, Card, InputWrapper, Stack, Text, NumberInput, Select, Group, Avatar, SimpleGrid } from '@mantine/core'
+import { Button, Card, InputWrapper, Stack, Text, NumberInput, Select, Group, Avatar, SimpleGrid, Tooltip } from '@mantine/core'
 import { popularCryptoCurrencies, mapNameCrypto } from '../../../../constants/cryptocurrencies'
-import React, { useState, useEffect, forwardRef, useMemo } from 'react'
+import React, { useState, useEffect, forwardRef, useMemo, useCallback } from 'react'
 import { getPriceToExchange } from '../../../../services';
 import toast from 'react-hot-toast';
 import { formatCrypto } from '../../../../helpers/numbers';
-import { useCallback } from 'react';
+import { InfoCircle } from 'tabler-icons-react';
+import { EXCHANGE_FAIL_MESSAGE, EXCHANGE_INFO } from '../../../../constants/strings'
 
 export const CardExchange = () => {
   const [amountToSend, setAmountToSend] = useState(0)
@@ -14,9 +15,9 @@ export const CardExchange = () => {
   const [exchangeValue, setExchangeValue] = useState(0)
   const [needReCalc, setNeedReCalc] = useState(false)
 
-  const dataSelect = popularCryptoCurrencies.map(crypto => ({value: crypto, label: crypto.toUpperCase(), image: `https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@bea1a9722a8c63169dcc06e86182bf2c55a76bbc/32/color/${crypto}.png`}))
-
   const urlBaseImage = 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@bea1a9722a8c63169dcc06e86182bf2c55a76bbc/32/color'
+
+  const dataSelect = popularCryptoCurrencies.map(crypto => ({value: crypto, label: crypto.toUpperCase(), image: `${urlBaseImage}/${crypto}.png`}))
   const urlFrom = useMemo(() => `${urlBaseImage}/${sendCurrency}.png`, [sendCurrency])
   const urlTo = useMemo(() => `${urlBaseImage}/${receiveCurrency}.png`, [receiveCurrency])
 
@@ -39,7 +40,7 @@ export const CardExchange = () => {
         if(values.length){
           setManualExchangeValue(values)
         }else{
-          toast.error('We dont have exchange for this pair.', {
+          toast.error(EXCHANGE_FAIL_MESSAGE, {
             duration: 2000,
             style: {
               borderRadius: '10px',
@@ -91,8 +92,17 @@ export const CardExchange = () => {
     <Card radius="lg" className='h-96' style={{ background: '#16161e' }} >
       <Card.Section style={{ background: '#16161e' }} className="py-5 px-5">
         <Stack justify="space-between" spacing="xl">
-          <div>
-            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white' }}>Exchange</Text>
+          <div className='flex flex-row gap-2'>
+            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white' }}>
+              Exchange
+            </Text>
+            <Tooltip
+                label={EXCHANGE_INFO}
+                withArrow
+                className='flex items-center mt-1.5 text-blue-400'
+              >
+                <InfoCircle size={22}/>
+            </Tooltip>
           </div>
           <Stack spacing={12}>
             <InputWrapper label="Amount">
