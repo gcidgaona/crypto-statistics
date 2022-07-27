@@ -99,6 +99,8 @@ export const CardExchange = () => {
             <Tooltip
                 label={EXCHANGE_INFO}
                 withArrow
+                position="bottom-end"
+                color="blue"
                 className='flex items-center mt-1.5 text-blue-400'
               >
                 <InfoCircle size={22}/>
