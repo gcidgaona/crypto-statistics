@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+const BASE_URL = 'https://api.coingecko.com/api/v3/'
 const BASE_API_URL = 'https://api.coingecko.com/api/v3/coins/'
 const BASE_API_PRICE = 'https://api.coingecko.com/api/v3/simple/price/'
 
@@ -23,7 +24,7 @@ export const getHistoricalChart = (id, days = 7) =>
   }).then(res => res.data)
 
 
-export const getTrendingCoins = (currency) =>
+export const getTrendingCoins = () =>
   axios({
-    url: `${BASE_API_URL}markets?vs_currency=${currency}&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`,
+    url: `${BASE_URL}search/trending`,
   }).then(res => res.data)

@@ -2,6 +2,7 @@ import React from 'react'
 import { CryptoTickers } from './CryptoTickers';
 import { Visualizer } from './Visualizer';
 import { Exchange } from './Exchange';
+import { Trending } from './Trending';
 
 export const Main = () => {
 
@@ -12,6 +13,9 @@ export const Main = () => {
           </div>
           <div className='lg:col-span-6 md:col-span-5 row-span-1'>
             <Visualizer />
+            <div>
+              <Trending />
+            </div>
           </div>
           <div className='lg:col-span-3 md:col-span-3 row-span-1'>
             <Exchange />
