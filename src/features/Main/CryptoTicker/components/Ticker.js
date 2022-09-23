@@ -18,21 +18,21 @@ export const Ticker = ({ crypto }) => {
   }
 
   return (
-    <Card radius="lg" style={{cursor: 'pointer'}} className="crypto-ticker" onClick={() => handleSetActive(crypto.id)}>
+    <Card radius="lg" className="crypto-ticker cursor-pointer" onClick={() => handleSetActive(crypto.id)}>
       <Card.Section className={currencySelected === crypto.id ? 'selected-ticker' : 'ticker' } style={{paddingLeft: 30, paddingRight: 20, paddingTop: 20, paddingBottom: 20 }}>
         <Stack spacing={6}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ backgroundColor: '#0d0f11', padding: 10, borderRadius: 12 }}>
+          <div className='flex items-center gap-3'>
+            <div style={{ backgroundColor: '#0d0f11' }} className='p-3 rounded-xl'>
               <Image src={image.thumb} width={25} height={25} alt="Norway" />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-              <Text size='lg' weight={700} color='white' style={{ textTransform: 'uppercase' }}>
+            <div className='flex flex-row gap-2 items-center'>
+              <Text size='lg' weight={700} color='white'className='uppercase'>
                 {symbol}
               </Text>
               <Text size='xs'>( {name} )</Text>
             </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+          <div className='flex flex-row gap-3 items-center'>
             <Text size='xl' color='white'>$  {formatFiatDolar(market_data.current_price.usd)}</Text>
             <Text color={getColor(market_data.price_change_percentage_24h)} size='sm' weight={400}>{formatPercentage(market_data.price_change_percentage_24h)}%</Text>
           </div>

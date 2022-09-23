@@ -23,7 +23,7 @@ export const CryptoTickers = () => {
   }, [getAllCryptoData])
 
   useEffect(() => {
-    const { market_data } = cryptoCurrencies.find(crypto => crypto.id === 'bitcoin')
+    const { market_data } = cryptoCurrencies?.find(crypto => crypto.id === 'bitcoin') || {}
     const getPrice = market_data?.current_price.usd || 0
     handlePriceBtc(getPrice)
   }, [cryptoCurrencies])

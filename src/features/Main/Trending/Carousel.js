@@ -41,9 +41,9 @@ export default function Carousel() {
     <div className="container">
       <div className="slider">
         {trends.map((coin, i) => (
-          <div key={i} className={`slide flex justify-between ${setStyleActive(i)}`} onClick={() => setNewActive(i)}>
+          <div key={i} className={`slide flex justify-between cursor-pointer ${setStyleActive(i)}`} onClick={() => setNewActive(i)}>
             <section className='flex gap-4 items-center'>
-              <div style={{ backgroundColor: '#0d0f11', padding: 10, borderRadius: 12 }}>
+              <div style={{ backgroundColor: '#0d0f11' }} className='p-3 rounded-xl'>
                 <Image src={coin.item.small} width={40} height={40} alt="Norway" />
               </div>
               <div>
