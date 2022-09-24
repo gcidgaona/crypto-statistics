@@ -39,7 +39,7 @@ export default function Carousel() {
   
   return (
     <div className="container">
-      <div className="slider">
+      <div className="slider flex items-center">
         {trends.map((coin, i) => (
           <div key={i} className={`slide flex justify-between cursor-pointer ${setStyleActive(i)}`} onClick={() => setNewActive(i)}>
             <section className='flex gap-4 items-center'>
